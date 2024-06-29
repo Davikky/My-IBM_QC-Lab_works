@@ -17,6 +17,13 @@
 \begin{document}
 \maketitle
 Here we show 3 implementations of the Multi-Controlled X gate using Classiq platform
+\paragraph{
+Task A: Synthesize 3 different implementations of an MCX (multi-control-x) with 5 control qubits and 1 target qubit (you should use the control quantum operation for implementing an MCX, follow this tutorial that can be open in the IDE). One implementation should be optimized for minimized depth, the other for minimized width, and the third somewhere in between (choose yourself what is the maximal width / depth you apply).}
+
+\paragraph{
+Export the 3 implementations as LaTeX files on the hierarchy level that demonstrates the differences between the implementations. Aggregate the implementations in 1 file and export it as a PDF and explain the key differences.}
+
+\newpage{}
 \section{Implementation 1: With minimized depth}
 
 In this implementation, the circuit width is 8 and the circuit depth is 34
@@ -49,7 +56,7 @@ The circuit is further revealed one step down its hierarchy to show further impl
 	 	\nghost{{q}_{7} :  } & \lstick{{q}_{7} :  } & \qw & \ghost{\mathrm{r1tof}}_<<<{2} & \ctrl{-1} & \qw & \ghost{\mathrm{r1tof}}_<<<{2} & \qw & \qw\\
 \\ }}
 
-
+\newpage
 \section{Implementation 2: With minimized width}
 In this implementation, the circuit width is 6 and the circuit depth is 117
 
@@ -76,6 +83,7 @@ The circuit is further revealed one step down its hierarchy to show further impl
 	 	\nghost{{q}_{5} :  } & \lstick{{q}_{5} :  } & \gate{\mathrm{H}} & \ghost{\mathrm{mcu1}\,(\mathrm{\pi})}_<<<{5} & \gate{\mathrm{H}} & \qw & \qw\\
 \\ }}
 
+\newpage
 \section{Implementation 3: optimal choice}
 In this implementation, the circuit width is 7 and the circuit depth is 51
 
@@ -105,8 +113,16 @@ The circuit is further revealed one step down its hierarchy to show further impl
 	 	\nghost{{q}_{6} :  } & \lstick{{q}_{6} :  } & \ghost{\mathrm{r1tof4}}_<<<{3} & \ghost{\mathrm{mcx}}_<<<{0} & \ghost{\mathrm{r1tof4\_dg}}_<<<{3} & \qw & \qw\\
 \\ }}
 
+\newpage
 \section{
 Explanation
 }
+The following can be deduced from the above implementations:
+\paragraph{
+Implementation 1 has the least depth of 34. It shows that lesser 2qubits gate were implemented. To achieve this however, it is the circuit with maximum width of 8}
+\paragraph{
+Implementation 2 has the least width of 6. It shows a restriction to just 6 qubits and this is at the cost of more 2qubits gate resulting to a depth of 117}
+\paragraph{
+Implementation 3 with optimal choice of depth is well obtained at the cost of an extra qubit resulting to 7qubits usage at a depth of 51.}
 
 \end{document}
