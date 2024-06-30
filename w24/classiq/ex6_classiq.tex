@@ -1,0 +1,224 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt, letterpaper]{article}
+\title{Implementation of MCX gate in classiq}
+\author{Victor Adeyemi \thanks{Womanium Global Quantum+AI Event 2024}}
+\date{June 2024}
+
+\usepackage[braket, qm]{qcircuit}
+\usepackage{graphicx}
+
+\begin{document}
+\maketitle
+
+\paragraph{
+Task A: Synthesize 3 different implementations of an MCX (multi-control-x) with 5 control qubits and 1 target qubit (you should use the control quantum operation for implementing an MCX, follow this tutorial that can be open in the IDE). One implementation should be optimized for minimized depth, the other for minimized width, and the third somewhere in between (choose yourself what is the maximal width / depth you apply).}
+
+\paragraph{
+Export the 3 implementations as LaTeX files on the hierarchy level that demonstrates the differences between the implementations. Aggregate the implementations in 1 file and export it as a PDF and explain the key differences.}
+
+\paragraph{
+Task B: Synthesize 2 different implementations of an MCX (multi-control-x) with 20 control qubits and 1 target qubit. Compare the circuit width and circuit depth required for each implementation.
+}
+
+\newpage{}
+\section{Task A: Here we show 3 implementations of the Multi-Controlled X gate with 5 control qubits and 1 target qubit using Classiq platform}
+
+\subsection{Implementation 1: With minimized depth}
+
+In this implementation, the circuit width is 8 and the circuit depth is 34
+
+\scalebox{1.0}{
+\Qcircuit @C=1.0em @R=1.0em @!R { \\
+	 	\nghost{{q}_{0} :  } & \lstick{{q}_{0} :  } & \multigate{7}{\mathrm{XGate}}_<<<{0} & \qw & \qw\\
+	 	\nghost{{q}_{1} :  } & \lstick{{q}_{1} :  } & \ghost{\mathrm{XGate}}_<<<{1} & \qw & \qw\\
+	 	\nghost{{q}_{2} :  } & \lstick{{q}_{2} :  } & \ghost{\mathrm{XGate}}_<<<{2} & \qw & \qw\\
+	 	\nghost{{q}_{3} :  } & \lstick{{q}_{3} :  } & \ghost{\mathrm{XGate}}_<<<{3} & \qw & \qw\\
+	 	\nghost{{q}_{4} :  } & \lstick{{q}_{4} :  } & \ghost{\mathrm{XGate}}_<<<{4} & \qw & \qw\\
+	 	\nghost{{q}_{5} :  } & \lstick{{q}_{5} :  } & \ghost{\mathrm{XGate}}_<<<{5} & \qw & \qw\\
+	 	\nghost{{q}_{6} :  } & \lstick{{q}_{6} :  } & \ghost{\mathrm{XGate}}_<<<{6} & \qw & \qw\\
+	 	\nghost{{q}_{7} :  } & \lstick{{q}_{7} :  } & \ghost{\mathrm{XGate}}_<<<{7} & \qw & \qw\\
+\\ }}
+
+\paragraph{
+The circuit is further revealed one step down its hierarchy to show further implementation
+}
+
+\scalebox{1.0}{
+\Qcircuit @C=1.0em @R=0.8em @!R { \\
+	 	\nghost{{q}_{0} :  } & \lstick{{q}_{0} :  } & \multigate{6}{\mathrm{r1tof4}}_<<<{0} & \qw & \qw & \multigate{6}{\mathrm{r1tof4\_dg}}_<<<{0} & \qw & \qw & \qw\\
+	 	\nghost{{q}_{1} :  } & \lstick{{q}_{1} :  } & \ghost{\mathrm{r1tof4}}_<<<{1} & \qw & \qw & \ghost{\mathrm{r1tof4\_dg}}_<<<{1} & \qw & \qw & \qw\\
+	 	\nghost{{q}_{2} :  } & \lstick{{q}_{2} :  } & \ghost{\mathrm{r1tof4}}_<<<{2} & \qw & \qw & \ghost{\mathrm{r1tof4\_dg}}_<<<{2} & \qw & \qw & \qw\\
+	 	\nghost{{q}_{3} :  } & \lstick{{q}_{3} :  } & \ghost{\mathrm{r1tof4}} & \multigate{4}{\mathrm{r1tof}}_<<<{0} & \qw & \ghost{\mathrm{r1tof4\_dg}} & \multigate{4}{\mathrm{r1tof}}_<<<{0} & \qw & \qw\\
+	 	\nghost{{q}_{4} :  } & \lstick{{q}_{4} :  } & \ghost{\mathrm{r1tof4}} & \ghost{\mathrm{r1tof}}_<<<{1} & \qw & \ghost{\mathrm{r1tof4\_dg}} & \ghost{\mathrm{r1tof}}_<<<{1} & \qw & \qw\\
+	 	\nghost{{q}_{5} :  } & \lstick{{q}_{5} :  } & \ghost{\mathrm{r1tof4}} & \ghost{\mathrm{r1tof}} & \targ & \ghost{\mathrm{r1tof4\_dg}} & \ghost{\mathrm{r1tof}} & \qw & \qw\\
+	 	\nghost{{q}_{6} :  } & \lstick{{q}_{6} :  } & \ghost{\mathrm{r1tof4}}_<<<{3} & \ghost{\mathrm{r1tof}} & \ctrl{-1} & \ghost{\mathrm{r1tof4\_dg}}_<<<{3} & \ghost{\mathrm{r1tof}} & \qw & \qw\\
+	 	\nghost{{q}_{7} :  } & \lstick{{q}_{7} :  } & \qw & \ghost{\mathrm{r1tof}}_<<<{2} & \ctrl{-1} & \qw & \ghost{\mathrm{r1tof}}_<<<{2} & \qw & \qw\\
+\\ }}
+
+\newpage
+\subsection{Implementation 2: With minimized width}
+In this implementation, the circuit width is 6 and the circuit depth is 117
+
+\scalebox{1.0}{
+\Qcircuit @C=1.0em @R=1.0em @!R { \\
+	 	\nghost{{q}_{0} :  } & \lstick{{q}_{0} :  } & \multigate{5}{\mathrm{XGate}}_<<<{0} & \qw & \qw\\
+	 	\nghost{{q}_{1} :  } & \lstick{{q}_{1} :  } & \ghost{\mathrm{XGate}}_<<<{1} & \qw & \qw\\
+	 	\nghost{{q}_{2} :  } & \lstick{{q}_{2} :  } & \ghost{\mathrm{XGate}}_<<<{2} & \qw & \qw\\
+	 	\nghost{{q}_{3} :  } & \lstick{{q}_{3} :  } & \ghost{\mathrm{XGate}}_<<<{3} & \qw & \qw\\
+	 	\nghost{{q}_{4} :  } & \lstick{{q}_{4} :  } & \ghost{\mathrm{XGate}}_<<<{4} & \qw & \qw\\
+	 	\nghost{{q}_{5} :  } & \lstick{{q}_{5} :  } & \ghost{\mathrm{XGate}}_<<<{5} & \qw & \qw\\
+\\ }}
+\paragraph{
+The circuit is further revealed one step down its hierarchy to show further implementation
+}
+
+\scalebox{1.0}{
+\Qcircuit @C=1.0em @R=0.2em @!R { \\
+	 	\nghost{{q}_{0} :  } & \lstick{{q}_{0} :  } & \qw & \multigate{5}{\mathrm{mcu1}\,(\mathrm{\pi})}_<<<{0} & \qw & \qw & \qw\\
+	 	\nghost{{q}_{1} :  } & \lstick{{q}_{1} :  } & \qw & \ghost{\mathrm{mcu1}\,(\mathrm{\pi})}_<<<{1} & \qw & \qw & \qw\\
+	 	\nghost{{q}_{2} :  } & \lstick{{q}_{2} :  } & \qw & \ghost{\mathrm{mcu1}\,(\mathrm{\pi})}_<<<{2} & \qw & \qw & \qw\\
+	 	\nghost{{q}_{3} :  } & \lstick{{q}_{3} :  } & \qw & \ghost{\mathrm{mcu1}\,(\mathrm{\pi})}_<<<{3} & \qw & \qw & \qw\\
+	 	\nghost{{q}_{4} :  } & \lstick{{q}_{4} :  } & \qw & \ghost{\mathrm{mcu1}\,(\mathrm{\pi})}_<<<{4} & \qw & \qw & \qw\\
+	 	\nghost{{q}_{5} :  } & \lstick{{q}_{5} :  } & \gate{\mathrm{H}} & \ghost{\mathrm{mcu1}\,(\mathrm{\pi})}_<<<{5} & \gate{\mathrm{H}} & \qw & \qw\\
+\\ }}
+
+\newpage
+\subsection{Implementation 3: optimal choice}
+In this implementation, the circuit width is 7 and the circuit depth is 51
+
+\scalebox{1.0}{
+\Qcircuit @C=1.0em @R=1.0em @!R { \\
+	 	\nghost{{q}_{0} :  } & \lstick{{q}_{0} :  } & \multigate{6}{\mathrm{XGate}}_<<<{0} & \qw & \qw\\
+	 	\nghost{{q}_{1} :  } & \lstick{{q}_{1} :  } & \ghost{\mathrm{XGate}}_<<<{1} & \qw & \qw\\
+	 	\nghost{{q}_{2} :  } & \lstick{{q}_{2} :  } & \ghost{\mathrm{XGate}}_<<<{2} & \qw & \qw\\
+	 	\nghost{{q}_{3} :  } & \lstick{{q}_{3} :  } & \ghost{\mathrm{XGate}}_<<<{3} & \qw & \qw\\
+	 	\nghost{{q}_{4} :  } & \lstick{{q}_{4} :  } & \ghost{\mathrm{XGate}}_<<<{4} & \qw & \qw\\
+	 	\nghost{{q}_{5} :  } & \lstick{{q}_{5} :  } & \ghost{\mathrm{XGate}}_<<<{5} & \qw & \qw\\
+	 	\nghost{{q}_{6} :  } & \lstick{{q}_{6} :  } & \ghost{\mathrm{XGate}}_<<<{6} & \qw & \qw\\
+\\ }}
+
+\paragraph{
+The circuit is further revealed one step down its hierarchy to show further implementation
+}
+
+\scalebox{1.0}{
+\Qcircuit @C=1.0em @R=1.0em @!R { \\
+	 	\nghost{{q}_{0} :  } & \lstick{{q}_{0} :  } & \multigate{6}{\mathrm{r1tof4}}_<<<{0} & \qw & \multigate{6}{\mathrm{r1tof4\_dg}}_<<<{0} & \qw & \qw\\
+	 	\nghost{{q}_{1} :  } & \lstick{{q}_{1} :  } & \ghost{\mathrm{r1tof4}}_<<<{1} & \qw & \ghost{\mathrm{r1tof4\_dg}}_<<<{1} & \qw & \qw\\
+	 	\nghost{{q}_{2} :  } & \lstick{{q}_{2} :  } & \ghost{\mathrm{r1tof4}}_<<<{2} & \qw & \ghost{\mathrm{r1tof4\_dg}}_<<<{2} & \qw & \qw\\
+	 	\nghost{{q}_{3} :  } & \lstick{{q}_{3} :  } & \ghost{\mathrm{r1tof4}} & \multigate{3}{\mathrm{mcx}}_<<<{1} & \ghost{\mathrm{r1tof4\_dg}} & \qw & \qw\\
+	 	\nghost{{q}_{4} :  } & \lstick{{q}_{4} :  } & \ghost{\mathrm{r1tof4}} & \ghost{\mathrm{mcx}}_<<<{2} & \ghost{\mathrm{r1tof4\_dg}} & \qw & \qw\\
+	 	\nghost{{q}_{5} :  } & \lstick{{q}_{5} :  } & \ghost{\mathrm{r1tof4}} & \ghost{\mathrm{mcx}}_<<<{3} & \ghost{\mathrm{r1tof4\_dg}} & \qw & \qw\\
+	 	\nghost{{q}_{6} :  } & \lstick{{q}_{6} :  } & \ghost{\mathrm{r1tof4}}_<<<{3} & \ghost{\mathrm{mcx}}_<<<{0} & \ghost{\mathrm{r1tof4\_dg}}_<<<{3} & \qw & \qw\\
+\\ }}
+
+\newpage
+\subsection{
+Explanation
+}
+The following can be deduced from the above implementations:
+\paragraph{
+Implementation 1 has the least depth of 34. It shows that lesser 2qubits gate were implemented. To achieve this however, it is the circuit with maximum width of 8}
+\paragraph{
+Implementation 2 has the least width of 6. It shows a restriction to just 6 qubits and this is at the cost of more 2qubits gate resulting to a depth of 117}
+\paragraph{
+Implementation 3 with optimal choice of depth is well obtained at the cost of an extra qubit resulting to 7qubits usage at a depth of 51.}
+
+\newpage
+
+\section{Task B: Here we show 2 implementations of the Multi-Controlled X gate with 20 control qubits and 1 target qubit using Classiq platform}
+
+
+\subsection{Implementation 1: with minimized depth}
+
+\scalebox{0.5}{
+\Qcircuit @C=1.0em @R=1.0em @!R { \\
+	 	\nghost{{q}_{0} :  } & \lstick{{q}_{0} :  } & \multigate{29}{\mathrm{XGate}}_<<<{0} & \qw & \qw\\
+	 	\nghost{{q}_{1} :  } & \lstick{{q}_{1} :  } & \ghost{\mathrm{XGate}}_<<<{1} & \qw & \qw\\
+	 	\nghost{{q}_{2} :  } & \lstick{{q}_{2} :  } & \ghost{\mathrm{XGate}}_<<<{2} & \qw & \qw\\
+	 	\nghost{{q}_{3} :  } & \lstick{{q}_{3} :  } & \ghost{\mathrm{XGate}}_<<<{3} & \qw & \qw\\
+	 	\nghost{{q}_{4} :  } & \lstick{{q}_{4} :  } & \ghost{\mathrm{XGate}}_<<<{4} & \qw & \qw\\
+	 	\nghost{{q}_{5} :  } & \lstick{{q}_{5} :  } & \ghost{\mathrm{XGate}}_<<<{5} & \qw & \qw\\
+	 	\nghost{{q}_{6} :  } & \lstick{{q}_{6} :  } & \ghost{\mathrm{XGate}}_<<<{6} & \qw & \qw\\
+	 	\nghost{{q}_{7} :  } & \lstick{{q}_{7} :  } & \ghost{\mathrm{XGate}}_<<<{7} & \qw & \qw\\
+	 	\nghost{{q}_{8} :  } & \lstick{{q}_{8} :  } & \ghost{\mathrm{XGate}}_<<<{8} & \qw & \qw\\
+	 	\nghost{{q}_{9} :  } & \lstick{{q}_{9} :  } & \ghost{\mathrm{XGate}}_<<<{9} & \qw & \qw\\
+	 	\nghost{{q}_{10} :  } & \lstick{{q}_{10} :  } & \ghost{\mathrm{XGate}}_<<<<{10} & \qw & \qw\\
+	 	\nghost{{q}_{11} :  } & \lstick{{q}_{11} :  } & \ghost{\mathrm{XGate}}_<<<<{11} & \qw & \qw\\
+	 	\nghost{{q}_{12} :  } & \lstick{{q}_{12} :  } & \ghost{\mathrm{XGate}}_<<<<{12} & \qw & \qw\\
+	 	\nghost{{q}_{13} :  } & \lstick{{q}_{13} :  } & \ghost{\mathrm{XGate}}_<<<<{13} & \qw & \qw\\
+	 	\nghost{{q}_{14} :  } & \lstick{{q}_{14} :  } & \ghost{\mathrm{XGate}}_<<<<{14} & \qw & \qw\\
+	 	\nghost{{q}_{15} :  } & \lstick{{q}_{15} :  } & \ghost{\mathrm{XGate}}_<<<<{15} & \qw & \qw\\
+	 	\nghost{{q}_{16} :  } & \lstick{{q}_{16} :  } & \ghost{\mathrm{XGate}}_<<<<{16} & \qw & \qw\\
+	 	\nghost{{q}_{17} :  } & \lstick{{q}_{17} :  } & \ghost{\mathrm{XGate}}_<<<<{17} & \qw & \qw\\
+	 	\nghost{{q}_{18} :  } & \lstick{{q}_{18} :  } & \ghost{\mathrm{XGate}}_<<<<{18} & \qw & \qw\\
+	 	\nghost{{q}_{19} :  } & \lstick{{q}_{19} :  } & \ghost{\mathrm{XGate}}_<<<<{19} & \qw & \qw\\
+	 	\nghost{{q}_{20} :  } & \lstick{{q}_{20} :  } & \ghost{\mathrm{XGate}}_<<<<{20} & \qw & \qw\\
+	 	\nghost{{q}_{21} :  } & \lstick{{q}_{21} :  } & \ghost{\mathrm{XGate}}_<<<<{21} & \qw & \qw\\
+	 	\nghost{{q}_{22} :  } & \lstick{{q}_{22} :  } & \ghost{\mathrm{XGate}}_<<<<{22} & \qw & \qw\\
+	 	\nghost{{q}_{23} :  } & \lstick{{q}_{23} :  } & \ghost{\mathrm{XGate}}_<<<<{23} & \qw & \qw\\
+	 	\nghost{{q}_{24} :  } & \lstick{{q}_{24} :  } & \ghost{\mathrm{XGate}}_<<<<{24} & \qw & \qw\\
+	 	\nghost{{q}_{25} :  } & \lstick{{q}_{25} :  } & \ghost{\mathrm{XGate}}_<<<<{25} & \qw & \qw\\
+	 	\nghost{{q}_{26} :  } & \lstick{{q}_{26} :  } & \ghost{\mathrm{XGate}}_<<<<{26} & \qw & \qw\\
+	 	\nghost{{q}_{27} :  } & \lstick{{q}_{27} :  } & \ghost{\mathrm{XGate}}_<<<<{27} & \qw & \qw\\
+	 	\nghost{{q}_{28} :  } & \lstick{{q}_{28} :  } & \ghost{\mathrm{XGate}}_<<<<{28} & \qw & \qw\\
+	 	\nghost{{q}_{29} :  } & \lstick{{q}_{29} :  } & \ghost{\mathrm{XGate}}_<<<<{29} & \qw & \qw\\
+\\ }}
+
+In the above implementation, the circuit width is 30 and the circuit depth is 66
+
+
+\subsection{Implementation 2: with minimized width}
+In this implementation, the circuit width is 22 and the circuit depth is 1894
+\scalebox{0.5}{
+\Qcircuit @C=1.0em @R=1.0em @!R { \\
+	 	\nghost{{q}_{0} :  } & \lstick{{q}_{0} :  } & \multigate{21}{\mathrm{XGate}}_<<<{0} & \qw & \qw\\
+	 	\nghost{{q}_{1} :  } & \lstick{{q}_{1} :  } & \ghost{\mathrm{XGate}}_<<<{1} & \qw & \qw\\
+	 	\nghost{{q}_{2} :  } & \lstick{{q}_{2} :  } & \ghost{\mathrm{XGate}}_<<<{2} & \qw & \qw\\
+	 	\nghost{{q}_{3} :  } & \lstick{{q}_{3} :  } & \ghost{\mathrm{XGate}}_<<<{3} & \qw & \qw\\
+	 	\nghost{{q}_{4} :  } & \lstick{{q}_{4} :  } & \ghost{\mathrm{XGate}}_<<<{4} & \qw & \qw\\
+	 	\nghost{{q}_{5} :  } & \lstick{{q}_{5} :  } & \ghost{\mathrm{XGate}}_<<<{5} & \qw & \qw\\
+	 	\nghost{{q}_{6} :  } & \lstick{{q}_{6} :  } & \ghost{\mathrm{XGate}}_<<<{6} & \qw & \qw\\
+	 	\nghost{{q}_{7} :  } & \lstick{{q}_{7} :  } & \ghost{\mathrm{XGate}}_<<<{7} & \qw & \qw\\
+	 	\nghost{{q}_{8} :  } & \lstick{{q}_{8} :  } & \ghost{\mathrm{XGate}}_<<<{8} & \qw & \qw\\
+	 	\nghost{{q}_{9} :  } & \lstick{{q}_{9} :  } & \ghost{\mathrm{XGate}}_<<<{9} & \qw & \qw\\
+	 	\nghost{{q}_{10} :  } & \lstick{{q}_{10} :  } & \ghost{\mathrm{XGate}}_<<<<{10} & \qw & \qw\\
+	 	\nghost{{q}_{11} :  } & \lstick{{q}_{11} :  } & \ghost{\mathrm{XGate}}_<<<<{11} & \qw & \qw\\
+	 	\nghost{{q}_{12} :  } & \lstick{{q}_{12} :  } & \ghost{\mathrm{XGate}}_<<<<{12} & \qw & \qw\\
+	 	\nghost{{q}_{13} :  } & \lstick{{q}_{13} :  } & \ghost{\mathrm{XGate}}_<<<<{13} & \qw & \qw\\
+	 	\nghost{{q}_{14} :  } & \lstick{{q}_{14} :  } & \ghost{\mathrm{XGate}}_<<<<{14} & \qw & \qw\\
+	 	\nghost{{q}_{15} :  } & \lstick{{q}_{15} :  } & \ghost{\mathrm{XGate}}_<<<<{15} & \qw & \qw\\
+	 	\nghost{{q}_{16} :  } & \lstick{{q}_{16} :  } & \ghost{\mathrm{XGate}}_<<<<{16} & \qw & \qw\\
+	 	\nghost{{q}_{17} :  } & \lstick{{q}_{17} :  } & \ghost{\mathrm{XGate}}_<<<<{17} & \qw & \qw\\
+	 	\nghost{{q}_{18} :  } & \lstick{{q}_{18} :  } & \ghost{\mathrm{XGate}}_<<<<{18} & \qw & \qw\\
+	 	\nghost{{q}_{19} :  } & \lstick{{q}_{19} :  } & \ghost{\mathrm{XGate}}_<<<<{19} & \qw & \qw\\
+	 	\nghost{{q}_{20} :  } & \lstick{{q}_{20} :  } & \ghost{\mathrm{XGate}}_<<<<{20} & \qw & \qw\\
+	 	\nghost{{q}_{21} :  } & \lstick{{q}_{21} :  } & \ghost{\mathrm{XGate}}_<<<<{21} & \qw & \qw\\
+\\ }}
+
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{c|c|c}
+        \textbf{Circuit} & \textbf{width} & \textbf{depth}  \\
+        $--------$ & $------$ & $------$ \\
+         Implementation 1 & 30 & 66 \\
+         Implementation 2 & 22 & 1894 \\
+    \end{tabular}
+    \caption{MCX with 20 control qubits and 1 target qubit}
+    \label{tab:comparism}
+\end{table}
+
+\hfill
+\hline
+\hfill
+\thanks{Womanium Global Quantum+AI Event 2024}
+
+\end{document}
